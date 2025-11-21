@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---08 white-space  */
+/* 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128 */
+/* 
+
+----02 Font size system:
+ 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+/*  */
+
+:root {
+  --main-text: #1e293b;
+  --border-color: #cbd5e1;
+  --primary-color: #2563eb;
+  --secondary-text: #475569;
+  --main-background: #f8fafc;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+  font-weight: normal;
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+}
