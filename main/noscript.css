@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+  font-weight: normal;
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+}
+
+/* no script code: */
+noscript {
+  width: 100vw;
+  display: flex;
+  height: 100vh;
+  color: #ffffff;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background-color: #0f172a;
+}
+
+.main-container {
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noscript-icon {
+  width: 7rem;
+  height: 7rem;
+  stroke: currentColor;
+}
+
+noscript .child-container h1 {
+  font-weight: 600;
+  font-size: 5.2rem;
+  word-spacing: 2px;
+  letter-spacing: 0.4px;
+}
+
+noscript .child-container p {
+  color: #e2e8f0;
+  font-size: 1.6rem;
+  text-align: center;
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 64em) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media (max-width: 48em) {
+  noscript .child-container h1 {
+    font-size: 4.4rem;
+  }
+  .noscript-icon {
+    width: 6.2rem;
+    height: 6.2rem;
+  }
+
+  noscript .child-container p {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 31.5625em) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  html {
+    font-size: 43.75%;
+  }
+
+  noscript .child-container p {
+    font-size: 1.6rem;
+  }
+}
+/*  */
