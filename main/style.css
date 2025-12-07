@@ -253,6 +253,12 @@ nav,
   padding-bottom: 9.6rem;
 }
 
+#login-btn:focus-visible,
+#pricing-cta:focus-visible {
+  outline-offset: 6px;
+  outline: 2px dashed #0d3791 !important;
+}
+
 .features-heading {
   font-size: 2rem;
   font-weight: 600;
@@ -673,8 +679,8 @@ h4 {
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px #2563eb33;
+  border-color: var(--primary-color);
 }
 
 .remember-row {
@@ -688,7 +694,7 @@ h4 {
   font-size: 1.5rem;
 }
 
-.login-btn {
+#login-btn {
   border: none;
   cursor: pointer;
   font-weight: 600;
@@ -700,11 +706,11 @@ h4 {
   background-color: var(--hover-color);
 }
 
-.login-btn:hover {
+#login-btn:hover {
   background-color: var(--cta-hover);
 }
 
-.login-btn:active {
+#login-btn:active {
   opacity: 0.8;
 }
 /*  */
