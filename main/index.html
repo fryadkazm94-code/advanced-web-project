@@ -80,7 +80,9 @@
           <li><a class="nav-links" href="#pricing">Pricing</a></li>
           <li><a class="nav-links" href="#follow us">Follow Us</a></li>
           <li>
-            <a id="try-for-free" href="#" title="try for free">Try for free</a>
+            <a id="try-for-free" href="#login" title="try for free"
+              >Try for free</a
+            >
           </li>
         </ul>
       </nav>
@@ -422,6 +424,46 @@
         </ul>
 
         <a href="" title="start for free" id="pricing-cta">Start for free</a>
+      </div>
+    </section>
+
+    <section class="login-section" id="login">
+      <div class="login-container">
+        <h2 class="login-heading">Sign in to Your Account</h2>
+        <p class="login-subtext">Access your dashboard and manage your polls</p>
+
+        <div class="login-card">
+          <form class="login-form" action="#" method="POST">
+            <div class="form-group">
+              <label for="login-username">Username</label>
+              <input
+                type="text"
+                id="login-username"
+                name="username"
+                required
+                placeholder="Enter your username"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <div class="remember-row">
+              <input type="checkbox" id="remember" name="remember" />
+              <label for="remember">Remember me</label>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
+          </form>
+        </div>
       </div>
     </section>
 
