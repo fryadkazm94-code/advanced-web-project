@@ -39,6 +39,7 @@ noscript {
   width: 7rem;
   height: 7rem;
   stroke: currentColor;
+  align-self: flex-start;
 }
 
 noscript .child-container h1 {
