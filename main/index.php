@@ -441,7 +441,7 @@
                 <input
                   required
                   type="email"
-                  name="username"
+                  name="email"
                   id="login-username"
                   placeholder="Enter your email"
                 />
