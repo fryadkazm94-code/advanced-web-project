@@ -36,6 +36,18 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.js-enabled {
+  display: none;
+}
+
+html.js .js-enabled {
+  display: block;
+}
+
+html:not(.js) {
+  overflow: hidden;
+}
+
 *:focus-visible {
   outline-offset: 6px;
   outline: 2px dashed #ffffff;

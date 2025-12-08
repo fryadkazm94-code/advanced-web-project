@@ -1,5 +1,6 @@
 "use strict";
 
+document.documentElement.classList.add("js");
 const ul = document.querySelector("ul");
 const menuBtn = document.querySelector(".menu-btn");
 const closeBtn = document.querySelector(".close-btn");
