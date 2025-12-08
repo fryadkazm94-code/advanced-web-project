@@ -9,7 +9,9 @@ html {
 }
 
 body {
+  height: 100vh;
   line-height: 1;
+  overflow-x: hidden;
   font-weight: normal;
   scroll-behavior: smooth;
   font-family: "Inter", sans-serif;
@@ -21,7 +23,6 @@ noscript {
   display: flex;
   height: 100vh;
   color: #ffffff;
-  overflow: hidden;
   align-items: center;
   justify-content: center;
   background-color: #0f172a;
@@ -41,6 +42,7 @@ noscript {
 }
 
 noscript .child-container h1 {
+  margin-bottom: 0;
   font-weight: 600;
   font-size: 5.2rem;
   word-spacing: 2px;
@@ -51,7 +53,7 @@ noscript .child-container p {
   color: #e2e8f0;
   font-size: 1.6rem;
   text-align: center;
-  margin-top: 0.4rem;
+  margin-top: 0.8rem;
 }
 
 @media (max-width: 64em) {
