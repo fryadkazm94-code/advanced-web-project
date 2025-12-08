@@ -1,5 +1,46 @@
 
 
+<?php
+session_start();
+require_once 'connection_db.php';
+
+// When the form is submitted
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // STEP 1 — CHECK IF EMAIL EXISTS
+    $sql = "SELECT * FROM users WHERE gmail='$email'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) === 0) {
+        // EMAIL NOT FOUND → REDIRECT TO SIGN UP
+        header("Location: sign_up.php");
+        exit;
+    }
+
+    // STEP 2 — EMAIL EXISTS → CHECK PASSWORD
+    $row = mysqli_fetch_assoc($result);
+
+    if ($row['password'] !== $password) {
+        echo "<p style='color:red; text-align:center;'>Wrong password</p>";
+    } 
+    else {
+        // STEP 3 — LOGIN SUCCESS → SAVE SESSION & REDIRECT
+
+        $_SESSION['user_id']  = $row['id'];
+        $_SESSION['username'] = $row['name'];
+        $_SESSION['email']    = $row['gmail'];
+        $_SESSION['password'] = $row['password'];
+
+        header("Location: user_dashboard.php");
+        exit;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

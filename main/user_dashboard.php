@@ -70,6 +70,10 @@ if (isset($_POST['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Dashboard | PollPulse</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+    <link rel="icon" href="../favicons/favicon.ico" />
 </head>
 
 <body>
@@ -135,11 +139,15 @@ if (isset($_POST['logout'])) {
         cursor: pointer;
         font-weight: 600;
         font-size: 1.6rem;
+        transition: all 1s;
         border-radius: 1rem;
         border-radius: 1rem;
         background-color: #dc2f02;
     }
 
+    .delete-account-btn:hover, .logout-btn:hover{
+      opacity: 0.8;
+    }
 
     .login-section{
         padding: 4.4rem;
@@ -153,6 +161,7 @@ if (isset($_POST['logout'])) {
         color: #ffffff;
         font-size: 1.6rem;
         border-radius: 1rem;
+        transition: all 0.35s;
         background-color: var(--hero-background);
     }
 </style>
