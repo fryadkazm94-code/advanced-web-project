@@ -36,7 +36,7 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-.js-enabled {
+/* .js-enabled {
   display: none;
 }
 
@@ -46,7 +46,7 @@ html.js .js-enabled {
 
 html:not(.js) {
   overflow: hidden;
-}
+} */
 
 *:focus-visible {
   outline-offset: 6px;
@@ -726,6 +726,29 @@ h4 {
   opacity: 0.8;
 }
 /*  */
+
+.register {
+  gap: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register p {
+  font-size: 1.6rem;
+  color: var(--secondary-text);
+}
+
+#register-link {
+  color: #2563eb;
+  font-weight: normal;
+  text-decoration: underline;
+  font-size: 1.6rem !important;
+}
+
+#register-link:hover {
+  text-decoration: none;
+}
 
 /* responsive: */
 @media (max-width: 75em) {

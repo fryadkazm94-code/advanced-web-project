@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,25 +24,13 @@
 
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="noscript.css" />
-    <link
-      sizes="180x180"
-      rel="apple-touch-icon"
-      href="/favicon_logoai/apple-touch-icon.png"
-    />
 
-    <link
-      rel="icon"
-      sizes="32x32"
-      type="image/png"
-      href="/favicon_logoai/favicon-32x32.png"
-    />
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+<link rel="icon" href="../favicons/favicon.ico" />
 
-    <link
-      rel="icon"
-      sizes="16x16"
-      type="image/png"
-      href="/favicon_logoai/favicon.ico"
-    />
 
     <link rel="manifest" href="/site.webmanifest" />
     <title>PollPulse — The Modern Way to Collect Opinions</title>
@@ -115,7 +105,7 @@
             </p>
 
             <div class="hero-links">
-              <a href="#" id="cta" title="Create Your Poll">Create Your Poll</a>
+              <a href="../main/sign_up.php" id="cta" title="Create Your Poll">Create Your Poll</a>
               <a href="#login" id="learn-more" title="Learn More"
                 >Learn more
                 <svg
@@ -142,7 +132,7 @@
               alt=""
               loading="lazy"
               class="hero-img"
-              src="/images/image.webp"
+              src="../images/image.webp"
             />
           </div>
         </div>
@@ -207,7 +197,7 @@
       <section class="testimonials">
         <div class="parent">
           <div class="div1">
-            <?xml version="1.0" encoding="utf-8"?><svg
+            <svg
               y="0px"
               x="0px"
               id="Layer_1"
@@ -237,7 +227,7 @@
             </p>
 
             <div class="user">
-              <img src="/images/victorHale.webp" class="test-img" alt="" />
+              <img src="../images/victorHale.webp" class="test-img" alt="" />
               <div class="name-role">
                 <p class="name">Victor Hale</p>
                 <p class="reole">Operations Director, InsightArc</p>
@@ -245,7 +235,7 @@
             </div>
           </div>
           <div class="div2">
-            <?xml  version="1.0" encoding="utf-8"?><svg
+            <svg
               y="0px"
               x="0px"
               id="Layer_1"
@@ -275,7 +265,7 @@
               workflow.”
             </p>
             <div class="user">
-              <img src="/images/EmilyCarter.webp" class="test-img" alt="" />
+              <img src="../images/EmilyCarter.webp" class="test-img" alt="" />
               <div class="name-role">
                 <p class="name">Emily Carter</p>
                 <p class="role">Marketing Lead, BrightWave Studio</p>
@@ -283,7 +273,7 @@
             </div>
           </div>
           <div class="div3">
-            <?xml version="1.0" encoding="utf-8"?><svg
+            <svg
               y="0px"
               x="0px"
               id="Layer_1"
@@ -314,7 +304,7 @@
                 part of our weekly workflow.”
               </p>
               <div class="user">
-                <img src="/images/AveryJohnson.webp" class="test-img" alt="" />
+                <img src="../images/AveryJohnson.webp" class="test-img" alt="" />
                 <div class="name-role">
                   <p class="name">Avery Johnson</p>
                   <p class="role">Product Manager, Voxline</p>
@@ -323,7 +313,7 @@
             </div>
           </div>
           <div class="div4 last-test">
-            <?xml version="1.0" encoding="utf-8"?><svg
+            <svg
               y="0px"
               x="0px"
               id="Layer_1"
@@ -356,7 +346,7 @@
               </p>
 
               <div class="user">
-                <img src="/images/LiangWei.webp" class="test-img" alt="" />
+                <img src="../images/LiangWei.webp" class="test-img" alt="" />
                 <div class="name-role">
                   <p class="name">Liang Wei</p>
                   <p class="role">UX Researcher, NovaLabs</p>
@@ -431,7 +421,7 @@
             </li>
           </ul>
 
-          <a href="" title="start for free" id="pricing-cta">Start for free</a>
+          <a href="#login" title="start for free" id="pricing-cta">Start for free</a>
         </div>
       </section>
 
@@ -453,7 +443,7 @@
                   type="text"
                   name="username"
                   id="login-username"
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                 />
               </div>
 
@@ -474,6 +464,10 @@
               </div>
 
               <a type="submit" id="login-btn">Sign In</a>
+              <div class="register">
+                <p>Don't have an account?</p>
+                <a href="../main/sign_up.php" id="register-link">Register here</a>
+              </div>
             </form>
           </div>
         </div>
@@ -561,7 +555,11 @@
         Copyright &copy; <span class="copyright">2004</span> by PollPulse , Inc.
         All rights reserved
       </footer>
-      <script src="/main/index.js"></script>
+      <script src="../main/index.js"></script>
     </div>
+
+    <style></style>
   </body>
+
+  
 </html>

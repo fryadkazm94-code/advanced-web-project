@@ -1,7 +1,7 @@
 "use strict";
 
 document.documentElement.classList.add("js");
-const ul = document.querySelector("ul");
+const ul = document.querySelector("header ul");
 const menuBtn = document.querySelector(".menu-btn");
 const closeBtn = document.querySelector(".close-btn");
 const copyRight = document.querySelector(".copyright");
@@ -27,7 +27,10 @@ const observer = new IntersectionObserver(
     threshold: 0,
   }
 );
-observer.observe(heroSection);
+
+if (heroSection) {
+  observer.observe(heroSection);
+}
 
 function open() {
   if (ul.classList.contains("nav-list")) {
@@ -56,4 +59,7 @@ menuBtn.addEventListener("click", open);
 closeBtn.addEventListener("click", close);
 
 let date = new Date().getFullYear();
-copyRight.textContent = date;
+
+if (copyRight) {
+  copyRight.textContent = date;
+}
