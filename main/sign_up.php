@@ -8,10 +8,7 @@ if (isset($_POST['signup'])) {
     $name = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-        if(strlen($password)<8){
-             echo "<p style='color:red; text-align:center;'>password should be greater then 8: " . mysqli_error($conn) . "</p>";
-            exit;
-        }
+       
     $sql = "INSERT INTO users (name, gmail, password) VALUES ('$name', '$email', '$password')";
     $result = mysqli_query($conn, $sql);
 

@@ -437,10 +437,10 @@
           <div class="login-card">
             <form class="login-form" action="" method="POST">
               <div class="form-group">
-                <label for="login-username">Username</label>
+                <label for="login-username">email</label>
                 <input
                   required
-                  type="text"
+                  type="email"
                   name="username"
                   id="login-username"
                   placeholder="Enter your email"
