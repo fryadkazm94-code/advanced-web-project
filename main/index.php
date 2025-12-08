@@ -463,7 +463,7 @@
                 <label for="remember">Remember me</label>
               </div>
 
-              <a type="submit" id="login-btn">Sign In</a>
+              <button type="submit" id="login-btn">Log In</button>
               <div class="register">
                 <p>Don't have an account?</p>
                 <a href="../main/sign_up.php" id="register-link">Register here</a>
