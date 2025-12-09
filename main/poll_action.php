@@ -2,7 +2,7 @@
 session_start();
 require_once "connection_db.php";
 
-// Check if user is logged in
+// Check login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -14,13 +14,13 @@ $user_id = $_SESSION['user_id'];
 $title = $_POST['title'];
 $options = $_POST['options'];
 
-// Check if title is empty
+// Check empty title
 if ($title == "") {
     header("Location: poll.php?error=empty_title");
     exit;
 }
 
-// Count how many options user entered
+// Count non-empty options
 $option_count = 0;
 foreach ($options as $op) {
     if ($op != "") {
@@ -34,23 +34,32 @@ if ($option_count < 2) {
     exit;
 }
 
-// Insert poll into polls table
-$sql_poll = "INSERT INTO polls (user_id, title) VALUES ('$user_id', '$title')";
+// -----------------------------
+// INSERT POLL
+// -----------------------------
+$sql_poll = "INSERT INTO polls (user_id, title, created_at)
+             VALUES ('$user_id', '$title', NOW())";
+
 mysqli_query($conn, $sql_poll);
 
-// Get the newly created poll ID
+// Get the poll id we just created
 $poll_id = mysqli_insert_id($conn);
 
-// Insert each option
+// -----------------------------
+// INSERT OPTIONS
+// -----------------------------
 foreach ($options as $op) {
-    if ($op != "") {   // Ignore empty ones
-        $sql_opt = "INSERT INTO poll_options (poll_id, option_text) VALUES ('$poll_id', '$op')";
+    if ($op != "") {
+        $sql_opt = "INSERT INTO poll_options (poll_id, option_text)
+                    VALUES ('$poll_id', '$op')";
         mysqli_query($conn, $sql_opt);
     }
 }
 
-
-// Redirect after success
-header("Location: view_poll.php?id=$poll_id");
+// -----------------------------
+// REDIRECT TO VIEW THE POLL
+// -----------------------------
+header("Location: view_poll.php?poll_id=" . $poll_id);
 exit;
+
 ?>

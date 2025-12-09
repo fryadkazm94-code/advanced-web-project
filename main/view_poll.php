@@ -2,30 +2,35 @@
 session_start();
 require_once "connection_db.php";
 
-// Make sure poll ID exists
-if (!isset($_GET['id'])) {
+// ----------------------------
+// CHECK IF poll_id EXISTS
+// ----------------------------
+if (!isset($_GET['poll_id'])) {
     echo "No poll selected.";
     exit;
 }
 
-$poll_id = $_GET['id'];
+$poll_id = $_GET['poll_id'];
 
-// Get poll
-$sql_poll = "SELECT * FROM polls WHERE poll_id = '$poll_id'";
+// ----------------------------
+// FETCH THE POLL ITSELF
+// ----------------------------
+$sql_poll = "SELECT * FROM polls WHERE poll_id = $poll_id";
 $result_poll = mysqli_query($conn, $sql_poll);
 
-if (mysqli_num_rows($result_poll) === 0) {
+if (mysqli_num_rows($result_poll) == 0) {
     echo "Poll not found.";
     exit;
 }
 
 $poll = mysqli_fetch_assoc($result_poll);
 
-// Get poll options
-$sql_options = "SELECT * FROM poll_options WHERE poll_id = '$poll_id'";
+// ----------------------------
+// FETCH POLL OPTIONS
+// ----------------------------
+$sql_options = "SELECT * FROM poll_options WHERE poll_id = $poll_id";
 $result_options = mysqli_query($conn, $sql_options);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,15 +96,18 @@ $result_options = mysqli_query($conn, $sql_options);
 <?php include 'altered_header.php'; ?>
 
 <div class="view-container">
-    <h1 class="poll-title"><?php echo htmlspecialchars($poll['title']); ?></h1>
 
-    <?php while ($row = mysqli_fetch_assoc($result_options)) { ?>
-        <div class="option-box">
-            <?php echo htmlspecialchars($row['option_text']); ?>
-        </div>
-    <?php } ?>
+    <h1 class="poll-title"><?php echo $poll['title']; ?></h1>
 
-    <a href="poll.php" class="back-btn">Create another poll</a>
+    <!-- Show the poll options -->
+    <?php 
+    while ($row = mysqli_fetch_assoc($result_options)) {
+        echo "<div class='option-box'>" . $row['option_text'] . "</div>";
+    }
+    ?>
+
+    <a href="../main/user_poll.php" class="back-btn">Back to My Polls</a>
+
 </div>
 
 </body>

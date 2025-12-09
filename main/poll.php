@@ -172,7 +172,7 @@ input:focus{
     <div class="flex-container"><aside>
         Welcome, <?php echo htmlspecialchars($username); ?>
     </aside>
-<a href="">
+<a href="../main/user_poll.php">
     view all polls
 </a></div>
     
