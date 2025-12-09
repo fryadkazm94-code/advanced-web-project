@@ -25,7 +25,7 @@ if (isset($_POST['signup'])) {
       $result = mysqli_query($conn, $sql);
 
     if ($result) {
-      header("Location: login.php");
+      header("Location: login.php?created=1");
         exit;
     } else {
         echo "<p style='color:red; text-align:center;'>Error: " . mysqli_error($conn) . "</p>";

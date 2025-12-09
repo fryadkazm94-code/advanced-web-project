@@ -49,12 +49,15 @@ include "header.php";
 ?>
 
     <section class="login-section" id="login">
-
-    
         <div class="login-container">
+
         <?php 
         if (isset($error_message)) {
         echo "<p style='color:red; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -5rem;'>$error_message</p>";
+        }
+
+        if (isset($_GET['created']) && $_GET['created'] == 1) {
+          echo "<p style='color:green; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -4.4rem;'>Account created successfully! <br> now you can login</p>";
         }
         ?>
 
