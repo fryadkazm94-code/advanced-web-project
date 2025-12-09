@@ -80,6 +80,7 @@ if (isset($_POST['logout'])) {
 
 <?php include 'header.php'; ?>
 
+
 <section class="login-section">
   <div class="login-container">
     <h2 class="login-heading secondary-heading">Your Profile</h2>
@@ -109,7 +110,7 @@ if (isset($_POST['logout'])) {
 
         <button type="submit" id="login-btn" name="update_profile">Save Changes</button>
 
-        <button type="button" id="login-btn" onclick="window.location.href='create_poll.php'">
+        <button type="button" id="login-btn" onclick="window.location.href='../main/poll.php'">
           Create Poll
         </button>
 
