@@ -2,23 +2,37 @@
 require_once 'connection_db.php';
 
 // Handle the form submission BEFORE the HTML loads
-
 if (isset($_POST['signup'])) {
 
     $name = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-       
-    $sql = "INSERT INTO users (name, gmail, password) VALUES ('$name', '$email', '$password')";
-    $result = mysqli_query($conn, $sql);
+
+    // CHECK IF GMAIL ALREADY EXISTS
+    $check = "SELECT * FROM users WHERE gmail='$email'";
+    $check_result = mysqli_query($conn, $check);
+
+    if (mysqli_num_rows($check_result) > 0) {
+      $error_message = "Gmail is already in use";
+    }
+
+    else if(strlen($password) < 8){
+      $error_message = "Password must be greater than 8 characters";
+    }
+
+    else {
+      $sql = "INSERT INTO users (name, gmail, password) VALUES ('$name', '$email', '$password')";
+      $result = mysqli_query($conn, $sql);
 
     if ($result) {
-        header("Location: login.php");
+      header("Location: login.php");
         exit;
     } else {
         echo "<p style='color:red; text-align:center;'>Error: " . mysqli_error($conn) . "</p>";
+      }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +55,11 @@ include 'header.php';
 ?>
 <section class="login-section" id="register">
   <div class="login-container">
+    <?php 
+    if (isset($error_message)) {
+    echo "<p style='color:red; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -2.4rem;'>$error_message</p>";
+    }
+    ?>
     <h2 class="login-heading secondary-heading">Create Your Account</h2>
     <p class="login-subtext">Join PollPulse and start creating polls instantly</p>
 

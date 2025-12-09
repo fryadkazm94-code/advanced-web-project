@@ -11,6 +11,7 @@ if (isset($_POST['sign_in'])) {
     $sql = "SELECT * FROM users WHERE gmail='$email' AND password='$password'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
+    $message = "Wrong email or password";
 
     if ($row) {
 
@@ -24,7 +25,7 @@ if (isset($_POST['sign_in'])) {
         exit;
 
     } else {
-        echo "<p style='color:red; text-align:center;'>Wrong email or password</p>";
+      $error_message = $message;
     }
 }
 ?>
@@ -48,7 +49,15 @@ include "header.php";
 ?>
 
     <section class="login-section" id="login">
+
+    
         <div class="login-container">
+        <?php 
+        if (isset($error_message)) {
+        echo "<p style='color:red; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -5rem;'>$error_message</p>";
+        }
+        ?>
+
           <h2 class="login-heading secondary-heading">
             Sign in to Your Account
           </h2>
