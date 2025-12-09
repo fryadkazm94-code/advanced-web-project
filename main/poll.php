@@ -38,7 +38,6 @@ margin-top: 8rem;
 }
 
 aside {
-    width: 15%;
     color: #0d3791;
     font-weight: 600;
     font-size: 1.8rem;
@@ -47,6 +46,8 @@ aside {
 .poll-container {
 width: 70%;
 display: flex;
+max-width: 100rem;
+margin: 0 auto;
 border-radius: 16px;
 background: #ffffff;
 flex-direction: column;
@@ -130,8 +131,8 @@ background: var(--cta-hover);
 }
 
 .create-poll-btn {
+color: #ffffff;
 background: #0d3791;
-color: white;
 }
 
 .create-poll-btn:hover {
@@ -144,16 +145,40 @@ opacity: 0.8;
     color: #000000;
 }
 
+input:focus{
+    box-shadow: 0 0 4px #0d379166;
+}
+
+.flex-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.4rem 2.4rem 0 2.4rem;
+}
+
+.flex-container a{
+    color: #0d3791;
+    font-weight: 600;
+    font-size: 1.8rem !important;
+}
+
+.flex-container a:hover{
+    text-decoration: underline;
+}
 </style>
 </head>
 
 <body>
-
-<div class="poll-page">
-
-    <aside>
+    <div class="flex-container"><aside>
         Welcome, <?php echo htmlspecialchars($username); ?>
     </aside>
+<a href="">
+    view all polls
+</a></div>
+    
+<div class="poll-page">
+
+    
 
     <form class="poll-container" action = "../main/poll_action.php" method = "POST">
         <?php

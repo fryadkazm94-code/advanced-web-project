@@ -49,7 +49,8 @@ foreach ($options as $op) {
     }
 }
 
+
 // Redirect after success
-header("Location: poll.php?success=poll_created");
+header("Location: view_poll.php?id=$poll_id");
 exit;
 ?>
