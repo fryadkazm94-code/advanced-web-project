@@ -22,17 +22,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $row = mysqli_fetch_assoc($result);
 
     if ($row['password'] !== $password) {
-        echo "<p style='color:red; text-align:center;'>Wrong password</p>";
-    } 
-    else {
-        // STEP 3 — LOGIN SUCCESS → SAVE SESSION & REDIRECT
+    $error_message = "Wrong password";
+    } else {
 
+        // STEP 3 — LOGIN SUCCESS → SAVE SESSION & REDIRECT
         $_SESSION['user_id']  = $row['id'];
         $_SESSION['username'] = $row['name'];
         $_SESSION['email']    = $row['gmail'];
         $_SESSION['password'] = $row['password'];
 
-        header("Location: user_dashboard.php");
+        header("Location: poll.php");
         exit;
     }
 }
@@ -163,7 +162,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </svg>
               </a>
             </div>
-            <p class="hero-links-text">No account needed • Free to start</p>
           </div>
 
           <div class="hero-img-box">
@@ -466,6 +464,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
       <section class="login-section" id="login">
         <div class="login-container">
+          <?php
+            if (!empty($error_message)) {
+              echo "<p style='color: red; text-align: center; margin-bottom: 1rem; font-size: 1.6rem;'>
+              $error_message </p>";
+            }
+            ?>
+
           <h2 class="login-heading secondary-heading">
             Sign in to Your Account
           </h2>
@@ -474,7 +479,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           </p>
 
           <div class="login-card">
-            <form class="login-form" action="" method="POST">
+            <form class="login-form" action="#login" method="POST">
               <div class="form-group">
                 <label for="login-username">email</label>
                 <input

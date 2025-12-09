@@ -81,13 +81,20 @@ if (isset($_POST['logout'])) {
 <?php include 'header.php'; ?>
 
 
+<div class= "go-back"><ion-icon class="go-back-icon" name="arrow-back-circle-outline"></ion-icon>
+<a class= "go-back-link" href="../main/poll.php">go back</a></div>
+
+<?php if (!empty($success)) echo "<p style='color:green; font-size: 18px;
+    font-weight: 600; text-align: center;
+    '>$success</p>"; ?>
+
+    <?php if (!empty($error)) echo "<p style='color:red;  font-size: 18px; text-align:center;
+    font-weight: 600;'>$error</p>"; ?>
+
 <section class="login-section">
   <div class="login-container">
     <h2 class="login-heading secondary-heading">Your Profile</h2>
     <p class="login-subtext">Manage your account information</p>
-
-    <?php if (!empty($success)) echo "<p style='color:green;'>$success</p>"; ?>
-    <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
 
     <div class="login-card">
 
@@ -133,6 +140,10 @@ if (isset($_POST['logout'])) {
 
 <style>
 
+  html{
+    font-size: 62.5%;
+  }
+
     .delete-account-btn{
         border:none;
         padding: 1.4rem;
@@ -151,7 +162,9 @@ if (isset($_POST['logout'])) {
     }
 
     .login-section{
-        padding: 4.4rem;
+      margin: 0 auto;
+      max-width: 60rem;
+      padding: 1.2rem 0;
     }
 
     .logout-btn{
@@ -165,6 +178,30 @@ if (isset($_POST['logout'])) {
         transition: all 0.35s;
         background-color: var(--hero-background);
     }
+
+    .go-back{
+      align-items: center;
+      gap: 0.4rem;
+      display: flex;
+      padding: 1.2rem;
+    }
+
+    .go-back:hover{
+      text-decoration: underline;
+    }
+
+    .go-back-link{
+      font-size: 2rem !important;
+      color: #000000 !important;
+    }
+
+    .go-back-icon{
+      width: 2.4rem;
+      height: 2.4rem;
+      color: #000000;
+    }
 </style>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

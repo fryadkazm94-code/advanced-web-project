@@ -21,7 +21,7 @@ if (isset($_POST['sign_in'])) {
         $_SESSION['email']     = $row['gmail'];
         $_SESSION['password']  = $row['password'];
 
-        header("Location: user_dashboard.php");
+        header("Location: poll.php");
         exit;
 
     } else {

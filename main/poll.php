@@ -155,22 +155,36 @@ opacity: 0.8;
         Welcome, <?php echo htmlspecialchars($username); ?>
     </aside>
 
-    <div class="poll-container">
-        
+    <form class="poll-container" action = "../main/poll_action.php" method = "POST">
+        <?php
+        if (isset($_GET['success']) && $_GET['success'] === 'poll_created') {
+            echo "<p style='color:green; text-align:center; font-size:1.8rem;'>Poll created successfully!</p>";
+        }
+
+        if (isset($_GET['error'])) {
+            if ($_GET['error'] === 'empty_title') {
+            echo "<p style='color:red; text-align:center; font-size:1.8rem;'>Poll title cannot be empty.</p>";
+            }
+        if ($_GET['error'] === 'not_enough_options') {
+             echo "<p style='color:red; text-align:center; font-size:1.8rem;'>You must provide at least 2 options.</p>";
+        }
+}
+?>
+
         <h2>Create a New Poll</h2>
 
         <label for="question">Title</label>
-        <input type="text" id="question" placeholder="Type your question here" />
+        <input name= "title" type="text" id="question" placeholder="Type your question here" required />
 
         <label>Answer Options</label>
         <div class="options-wrapper" id="options-wrapper">
 
             <div class="option-field">
-                <input type="text" class="option-input" placeholder="Option 1" />
+                <input type="text" class="option-input" placeholder="Option 1" name="options[]"/>
             </div>
 
             <div class="option-field">
-                <input type="text" class="option-input" placeholder="Option 2" />
+                <input type="text" class="option-input" placeholder="Option 2" name="options[]"/>
             </div>
         </div>
 
@@ -180,14 +194,13 @@ opacity: 0.8;
                 Add option
             </button>
 
-            <button class="create-poll-btn" id="create-poll-btn">
+            <button type= "submit" class="create-poll-btn" id="create-poll-btn">
                 Create Poll
             </button>
         </div>
-    </div>
+    </form>
 </div>
 
-<!-- EXTERNAL JS FILE -->
 <script src="../main/poll.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

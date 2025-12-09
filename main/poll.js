@@ -1,25 +1,38 @@
 "use strict";
 
-// selecting the elements needed to add and delete options
-const addBtn = document.getElementById("add-option-btn");
-const wrapper = document.getElementById("options-wrapper");
+// Selecting elements
+const btnAdd = document.getElementById("add-option-btn");
+const optionsWrapper = document.getElementById("options-wrapper");
 
-// creating an eventlistener to delete an option whenever the icon(butotn is clicked)
-addBtn.addEventListener("click", () => {
-  const div = document.createElement("div");
-  div.classList.add("option-field");
+// Add new option
+btnAdd.addEventListener("click", function () {
+  // Create a new option container
+  const newOption = document.createElement("div");
+  newOption.classList.add("option-field");
 
-  div.innerHTML = `
-        <input type="text" class="option-input" placeholder="New option" />
-        <ion-icon name="close-circle-outline" class="delete-option"></ion-icon>
-    `;
+  // HTML for the new option
+  newOption.innerHTML = `
+    <input 
+      type="text" 
+      class="option-input" 
+      name="options[]" 
+      placeholder="New option"
+      required
+    />
+    <ion-icon 
+      name="close-circle-outline" 
+      class="delete-option">
+    </ion-icon>
+  `;
 
-  wrapper.appendChild(div);
+  // Add new option to the list
+  optionsWrapper.appendChild(newOption);
 
-  // DELETE OPTION ICON
-  const del = div.querySelector(".delete-option");
+  // Selecting delete icon inside this new option
+  const deleteBtn = newOption.querySelector(".delete-option");
 
-  del.addEventListener("click", () => {
-    div.remove();
+  // Delete option when X is clicked
+  deleteBtn.addEventListener("click", function () {
+    newOption.remove();
   });
 });
