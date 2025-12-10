@@ -48,15 +48,27 @@ if (isset($_POST['delete_account'])) {
     $sql = "DELETE FROM users WHERE id='$user_id'";
     mysqli_query($conn, $sql);
 
+    // REMOVE REMEMBER-ME COOKIES
+    setcookie("remember_email", "", time() - 3600, "/advanced-web-project/main/");
+    setcookie("remember_password", "", time() - 3600, "/advanced-web-project/main/");
+
     session_destroy();
     header("Location: sign_up.php");
     exit;
 }
 
 
+
 // ------------------ LOGOUT ------------------
 if (isset($_POST['logout'])) {
+
+    // REMOVE REMEMBER-ME COOKIES
+    setcookie("remember_email", "", time() - 3600, "/advanced-web-project/main/");
+    setcookie("remember_password", "", time() - 3600, "/advanced-web-project/main/");
+
+    // DESTROY SESSION
     session_destroy();
+
     header("Location: login.php");
     exit;
 }

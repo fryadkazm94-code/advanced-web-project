@@ -1,6 +1,50 @@
 <?php
 session_start();
 require_once 'connection_db.php';
+$cookie_path = "/advanced-web-project/main/";
+
+
+if (!isset($_SESSION['user_id'])) {
+
+    if (isset($_COOKIE['remember_email']) && isset($_COOKIE['remember_password'])) {
+
+        $email    = $_COOKIE['remember_email'];
+        $password = $_COOKIE['remember_password'];
+
+        $sql = "SELECT * FROM users WHERE gmail='$email'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+
+
+        if ($row && $row['password'] === $password) {
+
+            // Set session
+            $_SESSION['user_id']  = $row['id'];
+            $_SESSION['username'] = $row['name'];
+            $_SESSION['email']    = $row['gmail'];
+            $_SESSION['role']     = $row['role'];
+
+
+           if (isset($_POST['remember'])) {
+            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), $cookie_path);
+            setcookie("remember_password", $row['password'], time() + (86400 * 30), $cookie_path);
+            } else {
+              setcookie("remember_email", "", time() - 3600, $cookie_path);
+              setcookie("remember_password", "", time() - 3600, $cookie_path);
+            }
+
+
+            if ($row['role'] === 'admin') {
+                header("Location: admin_dashboard.php");
+            } else {
+                header("Location: poll.php");
+            }
+            exit;
+        }
+    }
+}
+
 
 if (isset($_POST['sign_in'])) {
 
@@ -15,18 +59,24 @@ if (isset($_POST['sign_in'])) {
 
     if ($row) {
 
-        // SAVE SESSION PROPERLY
-        $_SESSION['user_id']   = $row['id'];
-        $_SESSION['username']  = $row['name'];
-        $_SESSION['email']     = $row['gmail'];
-        $_SESSION['password']  = $row['password'];
+    $_SESSION['user_id']   = $row['id'];
+    $_SESSION['username']  = $row['name'];
+    $_SESSION['role']      = $row['role'];  
+    $_SESSION['email']     = $row['gmail'];
+    $_SESSION['password']  = $row['password'];
 
-        header("Location: poll.php");
-        exit;
-
+    
+    if ($row['role'] === 'admin') {
+        header("Location: admin_dashboard.php");
     } else {
-      $error_message = $message;
+        header("Location: poll.php");
     }
+    exit;
+
+} else {
+    $error_message = $message;
+}
+
 }
 ?>
 
@@ -54,11 +104,14 @@ include "header.php";
         <?php 
         if (isset($error_message)) {
         echo "<p style='color:red; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -5rem;'>$error_message</p>";
+        } else if (isset($_GET['created']) && $_GET['created'] == 1){
+          echo "<p style='color:green; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -4.4rem;'>Account created successfully! <br> now you can login</p>";
+
         }
 
-        if (isset($_GET['created']) && $_GET['created'] == 1) {
-          echo "<p style='color:green; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -4.4rem;'>Account created successfully! <br> now you can login</p>";
-        }
+        // if (isset($_GET['created']) && $_GET['created'] == 1) {
+        //   echo "<p style='color:green; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -4.4rem;'>Account created successfully! <br> now you can login</p>";
+        // }
         ?>
 
           <h2 class="login-heading secondary-heading">
@@ -71,13 +124,15 @@ include "header.php";
           <div class="login-card">
             <form class="login-form" action="" method="POST">
               <div class="form-group">
-                <label for="login-username">email</label>
+                <label for="email">email</label>
                 <input
                   required
                   type="email"
                   name="email"
                   id="login-username"
                   placeholder="Enter your email"
+                  value="<?php echo isset($_COOKIE['remember_email']) ? $_COOKIE['remember_email'] : ''; ?>"
+
                 />
               </div>
 
@@ -89,6 +144,8 @@ include "header.php";
                   name="password"
                   id="login-password"
                   placeholder="Enter your password"
+                  value="<?php echo isset($_COOKIE['remember_password']) ? $_COOKIE['remember_password'] : ''; ?>"
+
                 />
               </div>
 

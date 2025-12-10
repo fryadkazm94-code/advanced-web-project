@@ -12,7 +12,7 @@ echo '<header class="header nav-open">
                 href="../main/user_dashboard.php#login"
                 id="try-for-free"
                 class="nav-links"
-                title="try for free"
+                title="profile"
                 >Profile</a
               >
             </li>
