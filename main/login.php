@@ -158,6 +158,10 @@ include "header.php";
     </div>
 
     <button type="submit" id="login-btn" name="sign_in">Log in</button>
+    <div class="register">
+        <p>Don't have an account?</p>
+        <a href="../main/sign_up.php" id="register-link">Register here</a>
+    </div>
 </form>
 
           </div>

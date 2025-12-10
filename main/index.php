@@ -526,7 +526,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           </p>
 
           <div class="login-card">
-           <form class="login-form" action="#login" method="POST">
+  <form class="login-form" action="#login" method="POST">
     <div class="form-group">
         <label for="login-username">email</label>
         <input
@@ -566,7 +566,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </form>
 
-          </div>
+ </div>
         </div>
       </section>
 
