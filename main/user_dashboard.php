@@ -8,18 +8,21 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Load current user data from session
-$user_id   = $_SESSION['user_id'];
-$username  = $_SESSION['username'];
 $email     = $_SESSION['email'];
-$password  = $_SESSION['password'];
+$user_id   = $_SESSION['user_id'];
+
+$sql = "SELECT * FROM users WHERE id='$user_id'";
+$result = mysqli_query($conn, $sql);
+$user = mysqli_fetch_assoc($result);
+$username = $user['name'];
+$password = $user['password'];   
 
 
-// ------------------ UPDATE PROFILE ------------------
+
 if (isset($_POST['update_profile'])) {
 
-    $new_name  = $_POST['new_username'];
     $new_email = $_POST['new_email'];
+    $new_name  = $_POST['new_username'];
     $new_pass  = $_POST['new_password'];
 
     $sql = "UPDATE users SET 
@@ -30,7 +33,6 @@ if (isset($_POST['update_profile'])) {
 
     if (mysqli_query($conn, $sql)) {
 
-        // Update SESSION so it refreshes instantly
         $_SESSION['username'] = $new_name;
         $_SESSION['email']    = $new_email;
         $_SESSION['password'] = $new_pass;
@@ -42,13 +44,11 @@ if (isset($_POST['update_profile'])) {
 }
 
 
-// ------------------ DELETE ACCOUNT ------------------
 if (isset($_POST['delete_account'])) {
 
     $sql = "DELETE FROM users WHERE id='$user_id'";
     mysqli_query($conn, $sql);
 
-    // REMOVE REMEMBER-ME COOKIES
     setcookie("remember_email", "", time() - 3600, "/advanced-web-project/main/");
     setcookie("remember_password", "", time() - 3600, "/advanced-web-project/main/");
 
@@ -59,10 +59,8 @@ if (isset($_POST['delete_account'])) {
 
 
 
-// ------------------ LOGOUT ------------------
 if (isset($_POST['logout'])) {
 
-    // REMOVE REMEMBER-ME COOKIES
     setcookie("remember_email", "", time() - 3600, "/advanced-web-project/main/");
     setcookie("remember_password", "", time() - 3600, "/advanced-web-project/main/");
 

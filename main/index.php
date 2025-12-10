@@ -1,40 +1,32 @@
 <?php
 session_start();
-require_once 'connection_db.php';
+require_once "connection_db.php";
+
 $cookie_path = "/advanced-web-project/main/";
 
+/* ---------------- CHECK IF REMEMBER COOKIES ARE VALID ---------------- */
+$remember_enabled = (
+    isset($_COOKIE['remember_email']) &&
+    isset($_COOKIE['remember_password'])
+);
+
+/* ---------------- AUTO LOGIN USING COOKIES ---------------- */
 if (!isset($_SESSION['user_id'])) {
 
-    if (isset($_COOKIE['remember_email']) && isset($_COOKIE['remember_password'])) {
+    if ($remember_enabled) {
 
-        $email    = $_COOKIE['remember_email'];
+        $email = $_COOKIE['remember_email'];
         $password = $_COOKIE['remember_password'];
 
-        $sql = "SELECT * FROM users WHERE gmail='$email'";
+        $sql = "SELECT * FROM users WHERE gmail='$email' AND password='$password'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
 
-        if ($row && $row['password'] === $password) {
-
-            // Set session
+        if ($row) {
             $_SESSION['user_id']  = $row['id'];
             $_SESSION['username'] = $row['name'];
             $_SESSION['email']    = $row['gmail'];
             $_SESSION['role']     = $row['role'];
-            $_SESSION['password'] = $row['password'];
-
-
-
-
-           if (isset($_POST['remember'])) {
-            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), $cookie_path);
-            setcookie("remember_password", $row['password'], time() + (86400 * 30), $cookie_path);
-            } else {
-            setcookie("remember_email", "", time() - 3600, $cookie_path);
-            setcookie("remember_password", "", time() - 3600, $cookie_path);
-            }
-
-          
 
             if ($row['role'] === 'admin') {
                 header("Location: admin_dashboard.php");
@@ -46,8 +38,7 @@ if (!isset($_SESSION['user_id'])) {
     }
 }
 
-
-
+/* ---------------- LOGIN FORM SUBMISSION ---------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $email = $_POST['email'];
@@ -55,42 +46,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $sql = "SELECT * FROM users WHERE gmail='$email'";
     $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
 
-    if (mysqli_num_rows($result) === 0) {
+    if (!$row) {
         header("Location: sign_up.php");
         exit;
     }
 
-    $row = mysqli_fetch_assoc($result);
-
     if ($row['password'] !== $password) {
-    $error_message = "Wrong password";
-
-} else {
-
-    $_SESSION['user_id']  = $row['id'];
-    $_SESSION['username'] = $row['name'];
-    $_SESSION['email']    = $row['gmail'];
-    $_SESSION['role']     = $row['role'];   
-
-
-if (isset($_POST['remember'])) {
-    setcookie("remember_email", $row['gmail'], time() + (86400 * 30), "/");
-    setcookie("remember_password", $row['password'], time() + (86400 * 30), "/");
-} else {
-    setcookie("remember_email", "", time() - 3600, "/");
-    setcookie("remember_password", "", time() - 3600, "/");
-}
-
-
-    if ($row['role'] === 'admin') {
-        header("Location: admin_dashboard.php");
+        $error_message = "Wrong password";
     } else {
-        header("Location: poll.php");
-    }
-    exit;
-}
 
+        $_SESSION['user_id']  = $row['id'];
+        $_SESSION['username'] = $row['name'];
+        $_SESSION['email']    = $row['gmail'];
+        $_SESSION['role']     = $row['role'];
+
+        // Save Remember Me ONLY IF checkbox is checked
+        if (isset($_POST['remember'])) {
+            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), $cookie_path);
+            setcookie("remember_password", $row['password'], time() + (86400 * 30), $cookie_path);
+        } else {
+            // User logged in WITHOUT remember me → delete cookies
+            setcookie("remember_email", "", time() - 3600, $cookie_path);
+            setcookie("remember_password", "", time() - 3600, $cookie_path);
+        }
+
+        if ($row['role'] === 'admin') {
+            header("Location: admin_dashboard.php");
+        } else {
+            header("Location: poll.php");
+        }
+        exit;
+    }
 }
 ?>
 
@@ -536,7 +524,7 @@ if (isset($_POST['remember'])) {
           </p>
 
           <div class="login-card">
-            <form class="login-form" action="#login" method="POST">
+            <form class="login-form" action="#login" method="POST" autocomplete="off">
               <div class="form-group">
                 <label for="login-username">email</label>
                 <input
@@ -544,8 +532,9 @@ if (isset($_POST['remember'])) {
                   type="email"
                   name="email"
                   id="login-username"
+                  autocomplete = "off"
                   placeholder="Enter your email"
-                  value="<?php echo isset($_COOKIE['remember_email']) ? $_COOKIE['remember_email'] : ''; ?>"
+                  value="<?php echo $remember_enabled ? $_COOKIE['remember_email'] : ''; ?>" autocomplete="off"
                 />
               </div>
 
@@ -556,8 +545,9 @@ if (isset($_POST['remember'])) {
                   type="password"
                   name="password"
                   id="login-password"
+                  autocomplete = "new-password"
                   placeholder="Enter your password"
-                  value="<?php echo isset($_COOKIE['remember_password']) ? $_COOKIE['remember_password'] : ''; ?>"
+                  value="<?php echo $remember_enabled ? $_COOKIE['remember_password'] : ''; ?>" autocomplete="off"
                 />
               </div>
 

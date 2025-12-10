@@ -2,9 +2,9 @@
 session_start();
 require_once "connection_db.php";
 
-// ----------------------------
+// -------------------------------------
 // CHECK IF poll_id EXISTS
-// ----------------------------
+// -------------------------------------
 if (!isset($_GET['poll_id'])) {
     echo "No poll selected.";
     exit;
@@ -12,9 +12,9 @@ if (!isset($_GET['poll_id'])) {
 
 $poll_id = $_GET['poll_id'];
 
-// ----------------------------
+// -------------------------------------
 // FETCH THE POLL ITSELF
-// ----------------------------
+// -------------------------------------
 $sql_poll = "SELECT * FROM polls WHERE poll_id = $poll_id";
 $result_poll = mysqli_query($conn, $sql_poll);
 
@@ -25,9 +25,9 @@ if (mysqli_num_rows($result_poll) == 0) {
 
 $poll = mysqli_fetch_assoc($result_poll);
 
-// ----------------------------
+// -------------------------------------
 // FETCH POLL OPTIONS
-// ----------------------------
+// -------------------------------------
 $sql_options = "SELECT * FROM poll_options WHERE poll_id = $poll_id";
 $result_options = mysqli_query($conn, $sql_options);
 ?>
@@ -66,10 +66,29 @@ $result_options = mysqli_query($conn, $sql_options);
         .option-box {
             font-size: 1.8rem;
             border-radius: 10px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.8rem;
             background: #f3f4f6;
             padding: 1.4rem 1.8rem;
             border: 1px solid #e2e8f0;
+        }
+
+        .vote-form {
+            margin-top: 1.2rem;
+        }
+
+        .vote-btn {
+            padding: 0.8rem 1.6rem;
+            background: #0d3791;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .vote-btn:hover {
+            background: #0a2a6a;
         }
 
         .back-btn {
@@ -93,18 +112,27 @@ $result_options = mysqli_query($conn, $sql_options);
 
 <body>
 
-<?php include 'altered_header.php'; ?>
 
 <div class="view-container">
 
     <h1 class="poll-title"><?php echo $poll['title']; ?></h1>
 
-    <!-- Show the poll options -->
     <?php 
-    while ($row = mysqli_fetch_assoc($result_options)) {
-        echo "<div class='option-box'>" . $row['option_text'] . "</div>";
-    }
-    ?>
+    while ($row = mysqli_fetch_assoc($result_options)) { ?>
+        
+        <div class="option-box">
+
+            <p><?php echo $row['option_text']; ?></p>
+
+            <form action="vote.php" method="POST" class="vote-form">
+                <input type="hidden" name="poll_id" value="<?php echo $poll_id; ?>">
+                <input type="hidden" name="option_id" value="<?php echo $row['option_id']; ?>">
+                <button type="submit" class="vote-btn">Vote</button>
+            </form>
+
+        </div>
+
+    <?php } ?>
 
     <a href="../main/user_poll.php" class="back-btn">Back to My Polls</a>
 
