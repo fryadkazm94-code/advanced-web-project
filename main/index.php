@@ -2,8 +2,6 @@
 session_start();
 require_once "connection_db.php";
 
-$cookie_path = "/advanced-web-project/main/";
-
 /* ---------------- CHECK IF REMEMBER COOKIES ARE VALID ---------------- */
 $remember_enabled = (
     isset($_COOKIE['remember_email']) &&
@@ -64,12 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Save Remember Me ONLY IF checkbox is checked
         if (isset($_POST['remember'])) {
-            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), $cookie_path);
-            setcookie("remember_password", $row['password'], time() + (86400 * 30), $cookie_path);
+
+            // Universal cookie path → works everywhere
+            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), "/");
+            setcookie("remember_password", $row['password'], time() + (86400 * 30), "/");
+
         } else {
             // User logged in WITHOUT remember me → delete cookies
-            setcookie("remember_email", "", time() - 3600, $cookie_path);
-            setcookie("remember_password", "", time() - 3600, $cookie_path);
+            setcookie("remember_email", "", time() - 3600, "/");
+            setcookie("remember_password", "", time() - 3600, "/");
         }
 
         if ($row['role'] === 'admin') {
@@ -81,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -524,44 +526,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           </p>
 
           <div class="login-card">
-            <form class="login-form" action="#login" method="POST" autocomplete="off">
-              <div class="form-group">
-                <label for="login-username">email</label>
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  id="login-username"
-                  autocomplete = "off"
-                  placeholder="Enter your email"
-                  value="<?php echo $remember_enabled ? $_COOKIE['remember_email'] : ''; ?>" autocomplete="off"
-                />
-              </div>
+           <form class="login-form" action="#login" method="POST">
+    <div class="form-group">
+        <label for="login-username">email</label>
+        <input
+            required
+            type="email"
+            name="email"
+            id="login-username"
+            placeholder="Enter your email"
+            value="<?php echo isset($_COOKIE['remember_email']) ? $_COOKIE['remember_email'] : ''; ?>"
+        />
+    </div>
 
-              <div class="form-group">
-                <label for="login-password">Password</label>
-                <input
-                  required
-                  type="password"
-                  name="password"
-                  id="login-password"
-                  autocomplete = "new-password"
-                  placeholder="Enter your password"
-                  value="<?php echo $remember_enabled ? $_COOKIE['remember_password'] : ''; ?>" autocomplete="off"
-                />
-              </div>
+    <div class="form-group">
+        <label for="login-password">Password</label>
+        <input
+            required
+            type="password"
+            name="password"
+            id="login-password"
+            placeholder="Enter your password"
+            value="<?php echo isset($_COOKIE['remember_password']) ? $_COOKIE['remember_password'] : ''; ?>"
+        />
+    </div>
 
-              <div class="remember-row">
-                <input type="checkbox" id="remember" name="remember" />
-                <label for="remember">Remember me</label>
-              </div>
+    <div class="remember-row">
+        <input type="checkbox" id="remember" name="remember"
+            <?php echo isset($_COOKIE['remember_email']) ? 'checked' : ''; ?>
+        />
+        <label for="remember">Remember me</label>
+    </div>
 
-              <button type="submit" id="login-btn">Log In</button>
-              <div class="register">
-                <p>Don't have an account?</p>
-                <a href="../main/sign_up.php" id="register-link">Register here</a>
-              </div>
-            </form>
+    <button type="submit" id="login-btn">Log In</button>
+
+    <div class="register">
+        <p>Don't have an account?</p>
+        <a href="../main/sign_up.php" id="register-link">Register here</a>
+    </div>
+</form>
+
           </div>
         </div>
       </section>

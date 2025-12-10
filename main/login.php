@@ -2,9 +2,7 @@
 session_start();
 require_once "connection_db.php";
 
-$cookie_path = "/advanced-web-project/main/";
-
-/* ---------------- CHECK IF REMEMBER ME COOKIES ARE VALID ---------------- */
+/* ---------------- REMEMBER ME CHECK ---------------- */
 $remember_enabled = (
     isset($_COOKIE['remember_email']) &&
     isset($_COOKIE['remember_password'])
@@ -23,6 +21,7 @@ if (!isset($_SESSION['user_id'])) {
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
+
             $_SESSION['user_id']  = $row['id'];
             $_SESSION['username'] = $row['name'];
             $_SESSION['email']    = $row['gmail'];
@@ -38,7 +37,7 @@ if (!isset($_SESSION['user_id'])) {
     }
 }
 
-/* ---------------- NORMAL LOGIN SUBMISSION ---------------- */
+/* ---------------- MANUAL LOGIN ---------------- */
 if (isset($_POST['sign_in'])) {
 
     $email = $_POST['email'];
@@ -49,7 +48,9 @@ if (isset($_POST['sign_in'])) {
     $row = mysqli_fetch_assoc($result);
 
     if (!$row) {
+
         $error_message = "Wrong email or password";
+
     } else {
 
         $_SESSION['user_id']  = $row['id'];
@@ -57,14 +58,18 @@ if (isset($_POST['sign_in'])) {
         $_SESSION['email']    = $row['gmail'];
         $_SESSION['role']     = $row['role'];
 
-        // REMEMBER ME → Save cookies
+        /* SAVE REMEMBER ME ONLY IF CHECKED */
         if (isset($_POST['remember'])) {
-            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), $cookie_path);
-            setcookie("remember_password", $row['password'], time() + (86400 * 30), $cookie_path);
+
+            // Universal cookie path
+            setcookie("remember_email", $row['gmail'], time() + (86400 * 30), "/");
+            setcookie("remember_password", $row['password'], time() + (86400 * 30), "/");
+
         } else {
-            // No Remember Me → Delete cookies
-            setcookie("remember_email", "", time() - 3600, $cookie_path);
-            setcookie("remember_password", "", time() - 3600, $cookie_path);
+
+            // Delete cookies if checkbox not selected
+            setcookie("remember_email", "", time() - 3600, "/");
+            setcookie("remember_password", "", time() - 3600, "/");
         }
 
         if ($row['role'] === 'admin') {
@@ -121,46 +126,40 @@ include "header.php";
           </p>
 
           <div class="login-card">
-            <form class="login-form" action="" method="POST" autocomplete="off">
-              <div class="form-group">
-                <label for="email">email</label>
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  id="login-username"
-                  autocomplete = "off"
-                  placeholder="Enter your email"
-                  value="<?php echo $remember_enabled ? $_COOKIE['remember_email'] : ''; ?>" autocomplete="off"
+           <form class="login-form" action="" method="POST">
 
-                />
-              </div>
+    <div class="form-group">
+        <label for="login-email">email</label>
+        <input
+            required
+            type="email"
+            name="email"
+            id="login-email"
+            placeholder="Enter your email"
+            value="<?php echo isset($_COOKIE['remember_email']) ? $_COOKIE['remember_email'] : ''; ?>"
+        />
+    </div>
 
-              <div class="form-group">
-                <label for="login-password">Password</label>
-                <input
-                  required
-                  type="password"
-                  name="password"
-                  id="login-password"
-                  autocomplete = "new-password"
-                  placeholder="Enter your password"
-                  value="<?php echo $remember_enabled ? $_COOKIE['remember_password'] : ''; ?>" autocomplete="off"
+    <div class="form-group">
+        <label for="login-password">Password</label>
+        <input
+            required
+            type="password"
+            name="password"
+            id="login-password"
+            placeholder="Enter your password"
+            value="<?php echo isset($_COOKIE['remember_password']) ? $_COOKIE['remember_password'] : ''; ?>"
+        />
+    </div>
 
-                />
-              </div>
+    <div class="remember-row">
+        <input type="checkbox" id="remember" name="remember" />
+        <label for="remember">Remember me</label>
+    </div>
 
-              <div class="remember-row">
-                <input type="checkbox" id="remember" name="remember" />
-                <label for="remember">Remember me</label>
-              </div>
+    <button type="submit" id="login-btn" name="sign_in">Log in</button>
+</form>
 
-              <button type="submit" id="login-btn" name="sign_in">Log in</button>
-              <div class="register">
-                <p>Don't have an account?</p>
-                <a href="sign_up.php" id="register-link">Register here</a>
-              </div>
-            </form>
           </div>
         </div>
       </section>
