@@ -2,9 +2,7 @@
 session_start();
 require_once "connection_db.php";
 
-// -------------------------------------
-// CHECK IF poll_id EXISTS
-// -------------------------------------
+
 if (!isset($_GET['poll_id'])) {
     echo "No poll selected.";
     exit;
@@ -12,9 +10,7 @@ if (!isset($_GET['poll_id'])) {
 
 $poll_id = $_GET['poll_id'];
 
-// -------------------------------------
-// FETCH THE POLL ITSELF
-// -------------------------------------
+
 $sql_poll = "SELECT * FROM polls WHERE poll_id = $poll_id";
 $result_poll = mysqli_query($conn, $sql_poll);
 
@@ -25,9 +21,7 @@ if (mysqli_num_rows($result_poll) == 0) {
 
 $poll = mysqli_fetch_assoc($result_poll);
 
-// -------------------------------------
-// FETCH POLL OPTIONS
-// -------------------------------------
+
 $sql_options = "SELECT * FROM poll_options WHERE poll_id = $poll_id";
 $result_options = mysqli_query($conn, $sql_options);
 ?>

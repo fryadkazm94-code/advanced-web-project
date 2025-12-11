@@ -2,41 +2,31 @@
 session_start();
 require_once "connection_db.php";
 
-/* ---------------- CHECK IF REMEMBER COOKIES ARE VALID ---------------- */
 $remember_enabled = (
-    isset($_COOKIE['remember_email']) &&
-    isset($_COOKIE['remember_password'])
+    !empty($_COOKIE['remember_email']) && 
+    !empty($_COOKIE['remember_password'])
 );
 
-/* ---------------- AUTO LOGIN USING COOKIES ---------------- */
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) && $remember_enabled) {
 
-    if ($remember_enabled) {
+    $email = $_COOKIE['remember_email'];
+    $password = $_COOKIE['remember_password'];
 
-        $email = $_COOKIE['remember_email'];
-        $password = $_COOKIE['remember_password'];
+    $sql = "SELECT * FROM users WHERE gmail='$email' AND password='$password'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
 
-        $sql = "SELECT * FROM users WHERE gmail='$email' AND password='$password'";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
+    if ($row) {
+        $_SESSION['user_id']  = $row['id'];
+        $_SESSION['username'] = $row['name'];
+        $_SESSION['email']    = $row['gmail'];
+        $_SESSION['role']     = $row['role'];
 
-        if ($row) {
-            $_SESSION['user_id']  = $row['id'];
-            $_SESSION['username'] = $row['name'];
-            $_SESSION['email']    = $row['gmail'];
-            $_SESSION['role']     = $row['role'];
-
-            if ($row['role'] === 'admin') {
-                header("Location: admin_dashboard.php");
-            } else {
-                header("Location: poll.php");
-            }
-            exit;
-        }
+        header("Location: poll.php");
+        exit;
     }
 }
 
-/* ---------------- LOGIN FORM SUBMISSION ---------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $email = $_POST['email'];
@@ -60,28 +50,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['email']    = $row['gmail'];
         $_SESSION['role']     = $row['role'];
 
-        // Save Remember Me ONLY IF checkbox is checked
         if (isset($_POST['remember'])) {
 
-            // Universal cookie path → works everywhere
             setcookie("remember_email", $row['gmail'], time() + (86400 * 30), "/");
             setcookie("remember_password", $row['password'], time() + (86400 * 30), "/");
 
         } else {
-            // User logged in WITHOUT remember me → delete cookies
             setcookie("remember_email", "", time() - 3600, "/");
             setcookie("remember_password", "", time() - 3600, "/");
         }
 
-        if ($row['role'] === 'admin') {
-            header("Location: admin_dashboard.php");
-        } else {
-            header("Location: poll.php");
-        }
+        header("Location: poll.php");
         exit;
     }
 }
 ?>
+
 
 
 

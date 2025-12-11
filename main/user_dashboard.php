@@ -2,22 +2,20 @@
 session_start();
 require_once 'connection_db.php';
 
-// USER MUST BE LOGGED IN
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-$email     = $_SESSION['email'];
-$user_id   = $_SESSION['user_id'];
+$email   = $_SESSION['email'];
+$user_id = $_SESSION['user_id'];
 
 $sql = "SELECT * FROM users WHERE id='$user_id'";
 $result = mysqli_query($conn, $sql);
 $user = mysqli_fetch_assoc($result);
+
 $username = $user['name'];
-$password = $user['password'];   
-
-
+$password = $user['password'];
 
 if (isset($_POST['update_profile'])) {
 
@@ -43,35 +41,29 @@ if (isset($_POST['update_profile'])) {
     }
 }
 
-
 if (isset($_POST['delete_account'])) {
 
-    $sql = "DELETE FROM users WHERE id='$user_id'";
-    mysqli_query($conn, $sql);
+    mysqli_query($conn, "DELETE FROM users WHERE id='$user_id'");
 
-    setcookie("remember_email", "", time() - 3600, "/advanced-web-project/main/");
-    setcookie("remember_password", "", time() - 3600, "/advanced-web-project/main/");
+    setcookie("remember_email", "", time() - 3600, "/");
+    setcookie("remember_password", "", time() - 3600, "/");
 
     session_destroy();
     header("Location: sign_up.php");
     exit;
 }
 
-
-
 if (isset($_POST['logout'])) {
 
-    setcookie("remember_email", "", time() - 3600, "/advanced-web-project/main/");
-    setcookie("remember_password", "", time() - 3600, "/advanced-web-project/main/");
+    setcookie("remember_email", "", time() - 3600, "/");
+    setcookie("remember_password", "", time() - 3600, "/");
 
-    // DESTROY SESSION
     session_destroy();
-
     header("Location: login.php");
     exit;
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

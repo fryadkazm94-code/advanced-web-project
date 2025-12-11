@@ -1,14 +1,12 @@
 <?php
 require_once 'connection_db.php';
 
-// Handle the form submission BEFORE the HTML loads
 if (isset($_POST['signup'])) {
 
     $name = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // CHECK IF GMAIL ALREADY EXISTS
     $check = "SELECT * FROM users WHERE gmail='$email'";
     $check_result = mysqli_query($conn, $check);
 
@@ -65,10 +63,8 @@ include 'header.php';
 
     <div class="login-card">
 
-      <!-- IMPORTANT: action="" so the form submits to same file -->
       <form class="login-form" action="" method="POST">
 
-        <!-- Username -->
         <div class="form-group">
           <label for="reg-username">Username</label>
           <input 
@@ -80,7 +76,6 @@ include 'header.php';
           />
         </div>
 
-        <!-- Gmail -->
         <div class="form-group">
           <label for="reg-email">Gmail</label>
           <input 
@@ -92,7 +87,6 @@ include 'header.php';
           />
         </div>
 
-        <!-- Password -->
         <div class="form-group">
           <label for="reg-password">Password</label>
           <input 
@@ -118,7 +112,6 @@ include 'header.php';
 </section>
 
 <style>
-/* REGISTER FORM — SAME STYLE AS LOGIN */
 
 #register .login-container {
   margin-top: 4rem;

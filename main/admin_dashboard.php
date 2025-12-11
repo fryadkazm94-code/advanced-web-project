@@ -2,13 +2,11 @@
 session_start();
 require_once "connection_db.php";
 
-// Only admin allowed
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     echo "Access denied.";
     exit;
 }
 
-// Get all normal users
 $sql = "SELECT * FROM users WHERE role='user'";
 $result = mysqli_query($conn, $sql);
 ?>

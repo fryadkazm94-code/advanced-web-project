@@ -1,17 +1,21 @@
 <?php
 session_start();
 
-// USER MUST BE LOGGED IN
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
+    exit;
+}
+
+if ($_SESSION['role'] === 'admin') {
+    header("Location: admin_dashboard.php");
     exit;
 }
 
 $username = $_SESSION['username'];
 
-// INCLUDE THE CUSTOM HEADER
 include 'altered_header.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,10 +24,8 @@ include 'altered_header.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Poll</title>
 
-    <!-- Your global CSS -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 

@@ -21,9 +21,7 @@ const observer = new IntersectionObserver(
   },
 
   {
-    // null means the view port
     root: null,
-    // i will make an event as soon as 0% of the hero-section is appearing in the view port
     threshold: 0,
   }
 );

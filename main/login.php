@@ -2,13 +2,11 @@
 session_start();
 require_once "connection_db.php";
 
-/* ---------------- REMEMBER ME CHECK ---------------- */
 $remember_enabled = (
     isset($_COOKIE['remember_email']) &&
     isset($_COOKIE['remember_password'])
 );
 
-/* ---------------- AUTO LOGIN USING COOKIES ---------------- */
 if (!isset($_SESSION['user_id'])) {
 
     if ($remember_enabled) {
@@ -37,7 +35,6 @@ if (!isset($_SESSION['user_id'])) {
     }
 }
 
-/* ---------------- MANUAL LOGIN ---------------- */
 if (isset($_POST['sign_in'])) {
 
     $email = $_POST['email'];
@@ -58,16 +55,13 @@ if (isset($_POST['sign_in'])) {
         $_SESSION['email']    = $row['gmail'];
         $_SESSION['role']     = $row['role'];
 
-        /* SAVE REMEMBER ME ONLY IF CHECKED */
         if (isset($_POST['remember'])) {
 
-            // Universal cookie path
             setcookie("remember_email", $row['gmail'], time() + (86400 * 30), "/");
             setcookie("remember_password", $row['password'], time() + (86400 * 30), "/");
 
         } else {
 
-            // Delete cookies if checkbox not selected
             setcookie("remember_email", "", time() - 3600, "/");
             setcookie("remember_password", "", time() - 3600, "/");
         }
@@ -113,9 +107,7 @@ include "header.php";
 
         }
 
-        // if (isset($_GET['created']) && $_GET['created'] == 1) {
-        //   echo "<p style='color:green; text-align:center; font-size:1.8rem; margin-bottom:1rem; margin-top: -4.4rem;'>Account created successfully! <br> now you can login</p>";
-        // }
+       
         ?>
 
           <h2 class="login-heading secondary-heading">

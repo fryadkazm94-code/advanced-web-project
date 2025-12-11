@@ -11,7 +11,6 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
-// Get all polls for this user
 $sql = "SELECT * FROM polls WHERE user_id = $user_id ORDER BY created_at DESC";
 $result = mysqli_query($conn, $sql);
 ?>
