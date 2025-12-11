@@ -9,6 +9,18 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+
+$admin_email = "admin@gmail.com";
+$admin_check = $conn->query("SELECT id FROM users WHERE gmail='$admin_email'");
+
+if ($admin_check && $admin_check->num_rows === 0) {
+
+    $conn->query("
+        INSERT INTO users (name, gmail, password, role)
+        VALUES ('Admin', 'admin@gmail.com', 'admin123', 'admin')
+    ");
+}
+
 $sql = "CREATE DATABASE IF NOT EXISTS pollpulse_db";
 if ($conn->query($sql) === TRUE) {
     echo "Database created or already exists.<br>";

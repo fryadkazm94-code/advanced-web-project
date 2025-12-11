@@ -48,9 +48,10 @@ aside {
 .poll-container {
 width: 70%;
 display: flex;
-max-width: 100rem;
 margin: 0 auto;
+max-width: 100rem;
 border-radius: 16px;
+margin-bottom: 4.4rem;
 background: #ffffff;
 flex-direction: column;
 gap: 1.2rem;padding: 3rem;
